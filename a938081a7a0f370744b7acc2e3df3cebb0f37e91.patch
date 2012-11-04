@@ -1,0 +1,41 @@
+From a938081a7a0f370744b7acc2e3df3cebb0f37e91 Mon Sep 17 00:00:00 2001
+From: Nick Schermer <nick@xfce.org>
+Date: Mon, 29 Oct 2012 21:13:22 +0000
+Subject: Protect against null value (bug #9418).
+
+---
+diff --git a/exo/exo-icon-view.c b/exo/exo-icon-view.c
+index 41792b9..050b8be 100644
+--- a/exo/exo-icon-view.c
++++ b/exo/exo-icon-view.c
+@@ -2704,20 +2704,22 @@ exo_icon_view_item_hit_test (ExoIconView      *icon_view,
+                              gint              width,
+                              gint              height)
+ {
+-  GList *l;
+-  GdkRectangle box;
++  GList               *l;
++  GdkRectangle         box;
++  ExoIconViewCellInfo *info;
+ 
+   for (l = icon_view->priv->cell_list; l; l = l->next)
+     {
+-      ExoIconViewCellInfo *info = (ExoIconViewCellInfo *)l->data;
++      info = l->data;
+ 
+-      if (!info->cell->visible)
++      if (!info->cell->visible
++          || item->box == NULL)
+         continue;
+ 
+       box = item->box[info->position];
+ 
+-      if (MIN (x + width, box.x + box.width) - MAX (x, box.x) > 0 &&
+-        MIN (y + height, box.y + box.height) - MAX (y, box.y) > 0)
++      if (MIN (x + width, box.x + box.width) - MAX (x, box.x) > 0
++          && MIN (y + height, box.y + box.height) - MAX (y, box.y) > 0)
+         return TRUE;
+     }
+ 
+--
+cgit v0.9.0.3
