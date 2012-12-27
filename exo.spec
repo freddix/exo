@@ -2,12 +2,12 @@
 
 Summary:	Extension library to Xfce developed by os-cillation
 Name:		exo
-Version:	0.10.1
+Version:	0.10.2
 Release:	1
 License:	GPL v2
 Group:		Libraries
 Source0:	http://archive.xfce.org/src/xfce/exo/0.10/%{name}-%{version}.tar.bz2
-# Source0-md5:	9464ca91d3c6b922274a691034955b80
+# Source0-md5:	c70f2a217811bfba2e62f938d4b8f748
 URL:		http://www.os-cillation.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
